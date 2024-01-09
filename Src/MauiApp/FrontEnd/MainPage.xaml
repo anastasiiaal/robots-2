@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FrontEnd"
+             xmlns:ViewModels="clr-namespace:FrontEnd.ViewModels;assembly=FrontEnd"
+             x:Class="FrontEnd.MainPage">
+    <ContentPage.BindingContext>
+        <ViewModels:RobotViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Grid.ColumnSpan="2">
+                <Label Text="OMRON Formation MAUI"  
+                   FontSize="Title"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   TextColor="DarkCyan"/>
+            </Border>
+            <Label Text="Formulaire de création de robot" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="15" />
+
+            <Label HorizontalOptions="Center" HorizontalTextAlignment="Center" Padding="10" Text="Nom du robot" Grid.Row="2" Grid.Column="0" Margin="15" />
+            <Entry x:Name="NomRobot" Text="{Binding RobotName}" Grid.Row="2" Grid.Column="1" Margin="15" />
+
+            <Label Text="Type de robot" Grid.Row="3" Grid.Column="0" Margin="15" Padding="10" />
+            <Picker x:Name="TypeRobot" ItemsSource="{Binding RobotTypes}" SelectedItem="{Binding RobotType}" Grid.Row="3" Grid.Column="1" VerticalOptions="Center" MinimumWidthRequest="300"></Picker>
+
+            <Label Text="Taille du robot" Grid.Row="4" Grid.Column="0" Margin="15" Padding="10" />
+            <Slider x:Name="SliderTailleRobot" Minimum="0" Maximum="100" Grid.Row="4" Grid.Column="1" Margin="15" VerticalOptions="Center" Value="{Binding Size}" />
+            <Label  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" FontSize="{Binding Value}" BindingContext="{x:Reference SliderTailleRobot}" Text="{Binding Value, StringFormat= 'Le robot est de taille {0:F0}'}">
+
+            </Label>
+
+            <Button Text="Ajouter un robot" x:Name="AddRobot" HorizontalOptions="Center" Command="{Binding AddRobotCommand}"  Grid.Row="6" Grid.Column="0"  />
+            <Button Text="Changer le nom robot" x:Name="ChangeName" HorizontalOptions="Center" Grid.Row="6" Grid.Column="1"  />
+            
+            <ListView ItemsSource="{Binding Robots}" Grid.Row="7" Grid.ColumnSpan="2" HorizontalOptions="Center" Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Text="{Binding Name}" Grid.Row="0" FontSize="{Binding Size}"/>
+                                <Label Text="{Binding TypeRobot}" Grid.Row="1" />
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+    </ScrollView>
+
+</ContentPage>
